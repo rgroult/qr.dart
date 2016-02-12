@@ -2,7 +2,7 @@ import 'dart:html';
 import 'dart:async';
 import 'dart:math' as math;
 import 'package:bot/bot.dart';
-import 'package:bot_web/bot_html.dart';
+//import 'package:bot_web/bot_html.dart';
 import 'package:qr/qr.dart';
 
 void main() {
@@ -42,6 +42,14 @@ class QrDemo {
   List<bool> _squares;
 
   bool _frameRequested = false;
+
+  void setTransform(CanvasRenderingContext2D ctx, AffineTransform tx){
+    // requireArgumentNotNull(ctx, 'ctx');
+    //requireArgumentNotNull(tx, 'tx');
+
+    ctx.setTransform(tx.scaleX, tx.shearY, tx.shearX,
+    tx.scaleY, tx.translateX, tx.translateY);
+  }
 
   QrDemo(CanvasElement canvas, DivElement typeDiv, DivElement errorDiv)
       : _canvas = canvas,
@@ -156,7 +164,7 @@ class QrDemo {
     tx.translate(-0.5 * size, -0.5 * size);
 
     _ctx.save();
-    CanvasUtil.setTransform(_ctx, tx);
+    setTransform(_ctx, tx);
 
     if (_squares.length > 0) {
       assert(_squares.length == size * size);
